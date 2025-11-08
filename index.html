@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOOTINGSPOT CREATIONS</title>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f6f8ff;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #ff6600;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 28px;
+  font-weight: bold;
+}
+section {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+h2 {
+  margin: 15px 0;
+  color: #222;
+  text-align: center;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.product {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  text-align: center;
+  padding: 12px;
+}
+.product img {
+  width: 100%;
+  border-radius: 10px;
+  height: 180px;
+  object-fit: cover;
+}
+.product h3 {
+  margin: 8px 0;
+  color: #222;
+  font-size: 16px;
+}
+.product p {
+  font-size: 13px;
+  color: #555;
+  margin: 4px 0;
+}
+.buy-btn {
+  background: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+.buy-btn:hover {
+  background: #cc5200;
+}
+#orderForm {
+  max-width: 500px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  display: none;
+}
+#orderForm label {
+  display: block;
+  margin-top: 12px;
+  color: #333;
+  font-weight: 600;
+}
+#orderForm input, #orderForm select, #orderForm textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+#orderForm button {
+  background: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  margin-top: 20px;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+}
+#orderForm button:hover {
+  background: #cc5200;
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+  .product img{height:150px;}
+}
+</style>
+</head>
+<body>
+
+<header>🛒 LOOTINGSPOT CREATIONS </header>
+
+<section id="shopSection">
+<h2>Our Products</h2>
+<div class="grid" id="productsGrid"></div>
+</section>
+
+<form id="orderForm">
+  <h2>🧾 Order Form</h2>
+  <label>Product</label>
+  <input type="text" id="productName" readonly>
+
+  <label>Color</label>
+  <input type="text" id="productColor" readonly>
+
+  <label>Size</label>
+  <select id="size" required>
+    <option value="" disabled selected>Select size</option>
+    <option value="S">S</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+    <option value="XXL">XXL</option>
+  </select>
+
+  <label>Price (₹)</label>
+  <input type="text" id="price" readonly>
+
+  <label>Full Name</label>
+  <input type="text" id="name" placeholder="Enter your name" required>
+
+  <label>Address</label>
+  <textarea id="address" placeholder="Enter your address" required></textarea>
+
+  <label>Phone Number</label>
+  <input type="tel" id="phone" placeholder="Enter phone number" required>
+
+  <label>Email</label>
+  <input type="email" id="email" placeholder="Enter email" required>
+
+  <button type="submit">Confirm Order</button>
+</form>
+
+<script>
+// Full product list
+const products = [
+  // Linen Shirts
+  {name:"Linen Shirt", color:"Beige", img:"beigelinean.jpg", prices:{S:545,M:545,L:448,XL:545,XXL:899}},
+  {name:"Linen Shirt", color:"Black", img:"blacklinean.jpg", prices:{S:699,M:545,L:546,XL:545,XXL:899}},
+  {name:"Linen Shirt", color:"Brown", img:"brownlinean.jpg", prices:{S:545,M:545,L:545,XL:545,XXL:899}},
+  {name:"Linen Shirt", color:"Red", img:"redlinean.jpg", prices:{S:545,M:545,L:545,XL:545,XXL:545}},
+  {name:"Linen Shirt", color:"Cream Blue", img:"bluelinean.jpg", prices:{S:545,M:545,L:699,XL:545,XXL:545}},
+  {name:"Linen Shirt", color:"Yellow", img:"yellowlinean.jpg", prices:{S:545,M:545,L:545,XL:545,XXL:545}},
+  {name:"Linen Shirt", color:"White", img:"whitelinean.jpg", prices:{S:545,M:545,L:550,XL:545,XXL:545}},
+  {name:"Linen Shirt", color:"Grey", img:"greylinean.jpg", prices:{S:545,M:545,L:550,XL:545,XXL:545}},
+  {name:"Linen Shirt", color:"Peach", img:"peachlinean.jpg", prices:{S:545,M:545,L:545,XL:550,XXL:699}},
+  
+  // Cotton Shirts
+  {name:"Cotton Shirt", color:"Black", img:"blackcotton.jpg", prices:{S:693,M:693,L:693,XL:693,XXL:693}},
+  {name:"Cotton Shirt", color:"Blue", img:"bluecotton.jpg", prices:{S:719,M:519,L:756,XL:756,XXL:756}},
+  {name:"Cotton Shirt", color:"Green", img:"greencotton.jpg", prices:{S:519,M:742,L:742,XL:519,XXL:519}},
+  {name:"Cotton Shirt", color:"White", img:"whitecotton.jpg", prices:{S:742,M:742,L:742,XL:742,XXL:742}},
+  {name:"Cotton Shirt", color:"Pink", img:"pinkcotton.jpg", prices:{S:738,M:738,L:738,XL:738,XXL:738}},
+  {name:"Cotton Shirt", color:"Teal", img:"tealcotton.jpg", prices:{S:707,M:707,L:707,XL:707,XXL:707}},
+
+  // Checked Shirts
+  {name:"Checked Shirt", color:"Brown", img:"brownchecked.jpg", prices:{S:448,M:448,L:448,XL:448,XXL:448}},
+  {name:"Checked Shirt", color:"Blue", img:"bluechecked.jpg", prices:{S:448,M:448,L:448,XL:448,XXL:448}},
+
+  // Denim Shirts
+  {name:"Denim Shirt", color:"Blue", img:"darkbluedenim.jpg", prices:{S:430,M:419,L:426,XL:428,XXL:699}},
+  {name:"Denim Shirt", color:"Black", img:"blackdenim2.jpg", prices:{S:426,M:426,L:426,XL:432,XXL:699}},
+  {name:"Denim Shirt", color:"Grey", img:"greydenim2.jpg", prices:{S:428,M:428,L:428,XL:470,XXL:699}},
+  {name:"Denim Shirt", color:"Sky Blue", img:"lighybluedenim.jpg", prices:{S:432,M:426,L:426,XL:428,XXL:699}},
+
+  // Jeans
+  {name:"Jeans", color:"Black", img:"blackjean.jpg", prices:{S:501,M:501,L:501,XL:501,XXL:999}},
+  {name:"Jeans", color:"White", img:"whitejean.jpg", prices:{S:407,M:433,L:999,XL:450,XXL:407}},
+  {name:"Jeans", color:"Sky Blue", img:"skybluejean.jpg", prices:{S:483,M:445,L:485,XL:467,XXL:519}},
+
+  // Formal Pants
+  {name:"Formal Pant", color:"Beige", img:"beigeformal.jpg", prices:{S:509,M:509,L:509,XL:509,XXL:509}},
+  {name:"Formal Pant", color:"Black", img:"blackformal.jpg", prices:{S:509,M:509,L:509,XL:509,XXL:509}},
+  {name:"Formal Pant", color:"White", img:"whiteformal.jpg", prices:{S:509,M:809,L:999,XL:809,XXL:809}},
+  {name:"Formal Pant", color:"Steel Grey", img:"steelgrey.jpg", prices:{S:509,M:509,L:509,XL:509,XXL:509}},
+  {name:"Formal Pant", color:"Slate Grey", img:"slategrey.jpg", prices:{S:509,M:509,L:509,XL:509,XXL:509}},
+
+  // Hoodies
+  {name:"Hoodie", color:"Red", img:"redhoodie.jpg", prices:{S:999,M:450,L:450,XL:450,XXL:999}},
+  {name:"Hoodie", color:"Black", img:"blackhoodie.jpg", prices:{S:999,M:450,L:450,XL:450,XXL:999}},
+  {name:"Hoodie", color:"Peach", img:"peachhoodie.jpg", prices:{S:999,M:450,L:999,XL:450,XXL:999}},
+  {name:"Hoodie", color:"Sky Blue", img:"skyblue.jpg", prices:{S:999,M:450,L:450,XL:450,XXL:999}},
+
+  // T-Shirts
+  {name:"T-Shirt Boys Good Times", color:"Multi", img:"boys1.jpg", prices:{S:331,M:999,L:316,XL:331,XXL:333}},
+  {name:"T-Shirt Dragon Print", color:"Multi", img:"dragon1.jpg", prices:{S:999,M:999,L:999,XL:335,XXL:308}},
+  {name:"T-Shirt Teddy Print", color:"Multi", img:"teddy1.jpg", prices:{S:326,M:326,L:331,XL:326,XXL:323}},
+  {name:"T-Shirt Gangster Print", color:"Multi", img:"gang1.jpg", prices:{S:331,M:336,L:326,XL:336,XXL:331}},
+  
+  // Formal shirts
+  {name:"formalshirt",color:"Black",img:"blackformaldress.jpg", prices:{S:499,M:501,L:501,XL:376,XXL:373}},
+  {name:"formalshirt",color:"Light grey",img:"lightgreyformal.jpg", prices:{S:369,M:339,L:339,XL:376,XXL:346}},
+  {name:"formalshirt",color:"Light blue",img:"skyblueformal.jpg", prices:{S:369,M:369,L:369,XL:376,XXL:376}},
+   {name:"formalshirt",color:"White",img:"whiteformaldress.jpg", prices:{S:367,M:501,L:501,XL:501,XXL:376}},
+    {name:"formalshirt",color:"Corol pink",img:"coralpinkformal.jpg", prices:{S:339,M:369,L:369,XL:376,XXL:376}},
+     {name:"formalshirt",color:"Dark pink",img:"pinkformal.jpg", prices:{S:369,M:369,L:369,XL:376,XXL:376}},
+      {name:"formalshirt",color:"Mustard",img:"mustardformal.jpg", prices:{S:339,M:339,L:369,XL:373,XXL:376}},
+       {name:"formalshirt",color:"Maroon",img:"Maroonformal.jpg", prices:{S:369,M:350,L:350,XL:501,XXL:376}},
+
+
+];
+
+// DOM Elements
+const grid = document.getElementById("productsGrid");
+const form = document.getElementById("orderForm");
+const productNameInput = document.getElementById("productName");
+const productColorInput = document.getElementById("productColor");
+const priceInput = document.getElementById("price");
+const sizeSelect = document.getElementById("size");
+
+// Generate product grid
+products.forEach(prod => {
+  const div = document.createElement("div");
+  div.classList.add("product");
+  div.innerHTML = `
+    <img src="${prod.img}" alt="${prod.name}">
+    <h3>${prod.name}</h3>
+    <p>Color: ${prod.color}</p>
+    <button class="buy-btn">Shop Now</button>
+  `;
+  grid.appendChild(div);
+
+  div.querySelector(".buy-btn").addEventListener("click", () => {
+    document.getElementById("shopSection").style.display = "none";
+    form.style.display = "block";
+    productNameInput.value = prod.name;
+    productColorInput.value = prod.color;
+    form.dataset.prices = JSON.stringify(prod.prices);
+    priceInput.value = "";
+    sizeSelect.value = "";
+  });
+});
+
+// Update price on size select
+sizeSelect.addEventListener("change", e => {
+  const prices = JSON.parse(form.dataset.prices);
+  const selectedSize = e.target.value;
+  priceInput.value = prices[selectedSize] || "";
+});
+
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// Firebase config — use your values
+const firebaseConfig = {
+  apiKey: "AIzaSyCpAIY_pkhgKyy2psqC5lxfqj3s-WUTbzc",
+  authDomain: "lootingspot-ad40d.firebaseapp.com",
+  projectId: "lootingspot-ad40d",
+  storageBucket: "lootingspot-ad40d.firebasestorage.app",
+  messagingSenderId: "589141400915",
+  appId: "1:589141400915:web:8f84d7bdbe93ee791255a6",
+  measurementId: "G-01C95M51B9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Form submit override to save in DB
+document.getElementById("orderForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const orderData = {
+    product: document.getElementById("productName").value,
+    color: document.getElementById("productColor").value,
+    size: document.getElementById("size").value,
+    price: document.getElementById("price").value,
+    name: document.getElementById("name").value,
+    address: document.getElementById("address").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    time: new Date().toISOString()
+  };
+
+  await addDoc(collection(db, "orders"), orderData);
+
+  alert("✅ Order Saved Successfully!");
+  e.target.reset();
+  document.getElementById("orderForm").style.display = "none";
+  document.getElementById("shopSection").style.display = "block";
+});
+</script>
+</body>
+</html>
